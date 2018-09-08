@@ -41,13 +41,13 @@ function dispatch(intentRequest, callback) {
 
     const userId = intentRequest.userId;
     const intentName = intentRequest.currentIntent.name;
-    
+    var updatedintentRequest = intentRequest;
     
     console.log('request received for userId=' + intentRequest.userId + ' intentName=' + intentRequest.currentIntent.name);
     
-    //console.log(intentRequest);
+    console.log(intentRequest);
     const sessionAttributes = intentRequest.sessionAttributes;
-    const slots = intentRequest.currentIntent.slots;
+    var slots = intentRequest.currentIntent.slots;
     
 
     
@@ -489,6 +489,92 @@ var response = "";
     
     
 }    
+
+if (intentName === 'hear_story')
+{
+    //Read from table
+    // Demo story
+    table = "govHack_user";
+    docClient = new AWS.DynamoDB.DocumentClient();
+params = {
+    TableName: table,
+            Key: {
+    "id" : "esenkhydrq32i1cc5c3r92mims64k0l3"
+  }
+};
+
+
+docClient.get(params, function(err, data) {
+    if (err) {
+        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Error.`}));
+    } else {
+        console.log("Query succeeded.");
+var  response = data.Item.story;
+     
+   
+        
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `${response}`}));
+    }
+});
+    
+    
+    
+}
+
+
+if (intentRequest.invocationSource === 'DialogCodeHook' && intentName === 'tell_story' && slots.agree === 'yes' && intentRequest.inputTranscript !== 'yes')
+{
+    
+        console.log("Sanity check");
+
+docClient = new AWS.DynamoDB.DocumentClient();
+
+    table = "govHack_user";
+
+    // Write to table
+
+
+var params = {
+    TableName:table,
+    Key:{
+        "id" : userId
+    },
+    UpdateExpression: "set story = :p",
+    ExpressionAttributeValues:{
+        ":p": intentRequest.inputTranscript
+    },
+    ReturnValues:"UPDATED_NEW"
+};
+docClient.update(params, function(err, data) {
+    if (err) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+        
+      // var updatedSlots = {"agree": "no", "story": "no" };
+        
+  // const outputSessionAttributes = intentRequest.sessionAttributes || {};
+     //   callback(delegate(outputSessionAttributes, updatedSlots));
+          
+   
+        return;
+    
+    }
+});
+ callback(close(sessionAttributes, 'Failed', {'contentType': 'PlainText', 'content': `Thank you for sharing your story`}));
+    
+}   
+
+
+if (intentRequest.invocationSource === 'DialogCodeHook' && intentName === 'tell_story')
+{
+
+   const outputSessionAttributes = intentRequest.sessionAttributes || {};
+
+        callback(delegate(outputSessionAttributes, intentRequest.currentIntent.slots));
+        return;
+}
 
 
 
