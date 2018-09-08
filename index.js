@@ -46,12 +46,23 @@ function dispatch(intentRequest, callback) {
     const userId = intentRequest.userId;
     const intentName = intentRequest.currentIntent.name;
     
-    const age = parseInt(slots.age);
-    const gender = slots.gender;
+    var age = parseInt(slots.age);
+    var gender = slots.gender;
     
     const rand = Math.floor(Math.random() * 65536);
     
-   
+        // Dataset is binary - randomly choose a gender (Not accurate. but a quick attempt at being inclusive)
+    if(gender === "other" && rand > (65536 / 2))
+    {
+        gender = "male";
+    }
+    else if(gender === "other")
+    {
+        gender = "female";
+    }
+    
+    const future_years = parseInt(slots.future_years);
+    
     const weight = parseInt(slots.weight);
     const height = parseInt(slots.height);
     var bmi = parseInt(slots.bodymassindex);
@@ -192,7 +203,7 @@ docClient.get(params, function(err, data) {
 var response = "";
        var riskBool;
        var responseLink = "https://www.nhmrc.gov.au/_files_nhmrc/file/publications/synopses/ds10-alcoholqa.pdf";
-       var response2;
+       var response2 = "";
         if(gender == "male" || gender == "Male")
         {
            if(std_drinks > 6)
@@ -244,7 +255,57 @@ var response = "";
 } 
 
 
+if (intentName === 'cancer')
+{
+    //Read from table
+    table = "cancer";
+    
+    if(future_years > 0)
+    {
+        age = age + future_years;
+    }
+    
+params = {
+    TableName: table,
+            Key: {
+    "age" : age
+  }
+};
 
+
+
+docClient.get(params, function(err, data) {
+    if (err) {
+        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Error.`}));
+    } else {
+        console.log("Query succeeded.");
+var response = "";
+       var riskBool;
+       var responseLink = "https://www.nhmrc.gov.au/_files_nhmrc/file/publications/synopses/ds10-alcoholqa.pdf";
+       var response2;
+        if(gender == "male" || gender == "Male")
+        {
+               response = Math.round(parseFloat(data.Item.male))/1000;
+               response2 = Math.round(parseFloat(data.Item.male_mortality))/1000;
+
+        }
+        else
+            {
+               response = Math.round(parseFloat(data.Item.male))/1000;
+               response2 = Math.round(parseFloat(data.Item.male_mortality))/1000;
+
+        }
+        
+   
+        
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `${response}% of ${gender}\'s aged ${age} have cancer incidents, and only ${response2}% die from cancer at ${age} years old.`}));
+    }
+});
+    
+    
+    
+} 
 
 if (intentName === 'physical_activity')
 {
