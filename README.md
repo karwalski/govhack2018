@@ -3,7 +3,7 @@ Govhack 2018
 
 Project Name: Shaping Australian Stories 
 
-Chatbot Name: Helpful Stat- Bot named Echo 
+Chatbot Name: Helpful Stat- Bot named Izzy
 
 MVP Case study: 
 
