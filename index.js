@@ -33,21 +33,122 @@ function delegate(sessionAttributes, slots) {
 
  
 function dispatch(intentRequest, callback) {
+       
+        // DB table settings
+    var AWS = require("aws-sdk");
+    var docClient = new AWS.DynamoDB.DocumentClient();
+    var table = "govHack_user";
+
+    const userId = intentRequest.userId;
+    const intentName = intentRequest.currentIntent.name;
+    
+    
     console.log('request received for userId=' + intentRequest.userId + ' intentName=' + intentRequest.currentIntent.name);
     
-    
+    //console.log(intentRequest);
     const sessionAttributes = intentRequest.sessionAttributes;
     const slots = intentRequest.currentIntent.slots;
     
 
     
     
-    const name = slots.name;
-    const userId = intentRequest.userId;
-    const intentName = intentRequest.currentIntent.name;
+    const username = slots.name;
+    if (username)
+    {
+docClient = new AWS.DynamoDB.DocumentClient();
+
+    table = "govHack_user";
+
+    // Write to table
+
+
+var params = {
+    TableName:table,
+    Key:{
+        "id" : userId
+    },
+    UpdateExpression: "set username = :p",
+    ExpressionAttributeValues:{
+        ":p": username
+    },
+    ReturnValues:"UPDATED_NEW"
+};
+
+docClient.update(params, function(err, data) {
+    if (err) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+    }
+});
+}
+    
     
     var age = parseInt(slots.age);
+    
+    if (age > 0)
+    {
+docClient = new AWS.DynamoDB.DocumentClient();
+    table = "govHack_user";
+
+    // Write to table
+
+
+var params = {
+    TableName:table,
+    Key:{
+        "id" : userId
+    },
+    UpdateExpression: "set age = :r",
+    ExpressionAttributeValues:{
+        ":r": age
+    },
+    ReturnValues:"UPDATED_NEW"
+};
+
+docClient.update(params, function(err, data) {
+    if (err) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+    }
+});
+}
+    
+    
+    
     var gender = slots.gender;
+    
+        if (gender)
+    {
+docClient = new AWS.DynamoDB.DocumentClient();
+
+    table = "govHack_user";
+
+    // Write to table
+
+
+var params = {
+    TableName:table,
+    Key:{
+        "id" : userId
+    },
+    UpdateExpression: "set gender = :p",
+    ExpressionAttributeValues:{
+        ":p": gender
+    },
+    ReturnValues:"UPDATED_NEW"
+};
+
+docClient.update(params, function(err, data) {
+    if (err) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+    }
+});
+}
+    
     
     const rand = Math.floor(Math.random() * 65536);
     
@@ -64,16 +165,71 @@ function dispatch(intentRequest, callback) {
     const future_years = parseInt(slots.future_years);
     
     const weight = parseInt(slots.weight);
+    
+    if (weight > 0)
+    {
+docClient = new AWS.DynamoDB.DocumentClient();
+    table = "govHack_user";
+
+    // Write to table
+
+
+var params = {
+    TableName:table,
+    Key:{
+        "id" : userId
+    },
+    UpdateExpression: "set weight = :r",
+    ExpressionAttributeValues:{
+        ":r": weight
+    },
+    ReturnValues:"UPDATED_NEW"
+};
+
+docClient.update(params, function(err, data) {
+    if (err) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+    }
+});
+}
+    
     const height = parseInt(slots.height);
+    
+    if (height > 0)
+    {
+docClient = new AWS.DynamoDB.DocumentClient();
+    table = "govHack_user";
+
+    // Write to table
+
+
+var params = {
+    TableName:table,
+    Key:{
+        "id" : userId
+    },
+    UpdateExpression: "set height = :r",
+    ExpressionAttributeValues:{
+        ":r": height
+    },
+    ReturnValues:"UPDATED_NEW"
+};
+
+docClient.update(params, function(err, data) {
+    if (err) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+    }
+});
+}
+
     var bmi = parseInt(slots.bodymassindex);
     
     const std_drinks = parseInt(slots.std_drinks);
-    
-        // DB table settings
-    var AWS = require("aws-sdk");
-    var docClient = new AWS.DynamoDB.DocumentClient();
-    var table = "govHack_user";
-
+ 
 
 
 if (intentName === 'greeting')
@@ -81,26 +237,9 @@ if (intentName === 'greeting')
     
     // Introduction intent - testing
 
-    table = "govHack_user";
+    
 
-    // Write to table
-    var params = {
-    TableName:table,
-    Item:{
-        "id" : userId,
-        "name": name
-    }
-};
-
-docClient.put(params, function(err, data) {
-    if (err) {
-        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
-    } else {
-        console.log("Added item:", JSON.stringify(data, null, 2));
-    }
-});
-
-    callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Hello ${name}, I am a chatbot`}));
+    callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Hello ${username}, I am a chatbot`}));
 
 
 }
@@ -120,7 +259,7 @@ if (intentName === 'bmi')
     
     //Read from table
     table = "bmi";
-    
+    docClient = new AWS.DynamoDB.DocumentClient();
     var bmiCatagory;
     var bmiDescription = ["Underweight", "Normal weight", "Overweight", "Obese"] ;
     if (bmi < 18)
@@ -184,7 +323,7 @@ if (intentName === 'risky_alcohol')
 {
     //Read from table
     table = "risky_alcohol";
-    
+    docClient = new AWS.DynamoDB.DocumentClient();
 params = {
     TableName: table,
             Key: {
@@ -259,7 +398,7 @@ if (intentName === 'cancer')
 {
     //Read from table
     table = "cancer";
-    
+    docClient = new AWS.DynamoDB.DocumentClient();
     if(future_years > 0)
     {
         age = age + future_years;
@@ -311,7 +450,7 @@ if (intentName === 'physical_activity')
 {
     //Read from table
     table = "physical_activity";
-    
+    docClient = new AWS.DynamoDB.DocumentClient();
 params = {
     TableName: table,
             Key: {
