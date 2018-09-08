@@ -39,7 +39,7 @@ Although her and her husband are both employed, they are struggling financially.
 | --- | --- | --- |
 | Demographic	| How many females in Aust?	| there are XXXXXXX Females in Australia, that's XX% |
 | | 	How many females are age 30?	| There are XXXXX 30 yr old Females in Australia |
-| |  	How many 30 year old’s have children?	XX% have 0 children XX% have 1 child XX% have 2 children X% have three children and X% have 4 or more |
+| |  	How many 30 year old’s have children?	| XX% have 0 children XX% have 1 child XX% have 2 children X% have three children and X% have 4 or more |
  | |  		How many are married?	| X% are married, X% are in a de-facto relationship X% are not in a relationship  |
 | Financial| 	What is the average income for women aged 30? 	| The average Gross annual income for females your age is $XX,XX |
  | |  		How many F my age work part time?	| XX% work part time, XX% work full time and XX% are not working  |
