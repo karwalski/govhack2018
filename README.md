@@ -36,7 +36,7 @@ Although her and her husband are both employed, they are struggling financially.
 
 
 | Category	| Intents	| A |
-| --- | --- |
+| --- | --- | --- |
 | Demographic	| How many females in Aust?	| there are XXXXXXX Females in Australia, that's XX% |
 | | 	How many females are age 30?	| There are XXXXX 30 yr old Females in Australia |
 | |  	How many 30 year old’s have children?	XX% have 0 children XX% have 1 child XX% have 2 children X% have three children and X% have 4 or more |
