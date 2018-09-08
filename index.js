@@ -56,6 +56,7 @@ function dispatch(intentRequest, callback) {
     const height = parseInt(slots.height);
     var bmi = parseInt(slots.bodymassindex);
     
+    const std_drinks = parseInt(slots.std_drinks);
     
         // DB table settings
     var AWS = require("aws-sdk");
@@ -168,7 +169,79 @@ var response = "";
 
 }
 
+if (intentName === 'risky_alcohol')
+{
+    //Read from table
+    table = "risky_alcohol";
+    
+params = {
+    TableName: table,
+            Key: {
+    "age" : age
+  }
+};
 
+
+
+docClient.get(params, function(err, data) {
+    if (err) {
+        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Error.`}));
+    } else {
+        console.log("Query succeeded.");
+var response = "";
+       var riskBool;
+       var responseLink = "https://www.nhmrc.gov.au/_files_nhmrc/file/publications/synopses/ds10-alcoholqa.pdf";
+       var response2;
+        if(gender == "male" || gender == "Male")
+        {
+           if(std_drinks > 6)
+           {
+               riskBool = "Yes, you drink in excess";
+               response = data.Item.male_single_occasion;
+               response2 = " on a single occasion";
+               responseLink = "https://adf.org.au/insights/aod-whos-risk/";
+           }
+           else if(std_drinks > 4)
+           {
+               riskBool = "Yes, you drink in excess";
+               response = data.Item.male;
+           }
+           else
+           {
+               riskBool = "No, you do not drink in excess";
+               response = data.Item.male;
+           }
+        }
+        else
+                {
+           if(std_drinks > 4)
+           {
+               riskBool = "Yes, you drink in excess";
+               response = data.Item.female_single_occasion;
+               response2 = " on a single occasion";
+               responseLink = "https://adf.org.au/insights/aod-whos-risk/";
+           }
+           else if(std_drinks > 2)
+           {
+               riskBool = "Yes, you drink in excess";
+               response = data.Item.female;
+           }
+           else
+           {
+               riskBool = "No, you do not drink in excess";
+               response = data.Item.female;
+           }
+        }
+   
+        
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `${riskBool}. ${response}% of ${age} year old ${gender}\'s drink in excess risky level of drinking${response2}. Visit ${responseLink} for the more information.`}));
+    }
+});
+    
+    
+    
+} 
 
 
 
