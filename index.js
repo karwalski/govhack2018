@@ -657,7 +657,7 @@ docClient.get(params, function(err, data) {
            var response = parseInt(data.Item.income);
            var response2 = parseInt(data.Item.disposable);
   
-        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Most ${age} year olds have a weekly take-home income around $${response2}.`}));
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Most ${age} year olds have a weekly take-home household income around $${response2}.`}));
     }
 });
     
