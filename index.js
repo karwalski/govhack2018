@@ -50,7 +50,36 @@ function dispatch(intentRequest, callback) {
     var slots = intentRequest.currentIntent.slots;
     
 
-    
+    const postcode = slots.postcode;
+        if (postcode)
+    {
+docClient = new AWS.DynamoDB.DocumentClient();
+
+    table = "govHack_user";
+
+    // Write to table
+
+
+var params = {
+    TableName:table,
+    Key:{
+        "id" : userId
+    },
+    UpdateExpression: "set postcode = :r",
+    ExpressionAttributeValues:{
+        ":r": postcode
+    },
+    ReturnValues:"UPDATED_NEW"
+};
+
+docClient.update(params, function(err, data) {
+    if (err) {
+        console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Added item:", JSON.stringify(data, null, 2));
+    }
+});
+}
     
     const username = slots.name;
     if (username)
@@ -438,7 +467,7 @@ var response = "";
         
    
         
-        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `${response}% of ${gender}\'s aged ${age} have cancer incidents, and only ${response2}% die from cancer at ${age} years old.`}));
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `${response}% of ${gender}\'s are diagnosed with cancer at ${age} years old, and only ${response2}% die from cancer at ${age} years old.`}));
     }
 });
     
@@ -522,6 +551,47 @@ var  response = data.Item.story;
     
 }
 
+
+if (intentName === 'socioeconomic_advantage')
+{
+    //Read from table
+    // Demo story
+    table = "socioeconomic_advantage";
+    docClient = new AWS.DynamoDB.DocumentClient();
+params = {
+    TableName: table,
+            Key: {
+    "postcode" : parseInt(postcode)
+  }
+};
+
+
+docClient.get(params, function(err, data) {
+    if (err) {
+        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Error.`}));
+    } else {
+        console.log("Query succeeded.");
+        var  response;
+        var rank = parseInt(data.Item.rank) * 10;
+        if (rank > 50)
+        {
+            response = "You live in one of the top " + (100 - rank) + "% most advantaged suburbs";
+        }
+        else
+        {
+            response = "You live in one of the bottom " + rank + "% most disadvantaged suburbs";
+        }
+     
+   
+        
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `${response}`}));
+    }
+});
+    
+    
+    
+}
 
 if (intentRequest.invocationSource === 'DialogCodeHook' && intentName === 'tell_story' && slots.agree === 'yes' && intentRequest.inputTranscript !== 'yes')
 {
