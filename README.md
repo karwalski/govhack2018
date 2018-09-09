@@ -34,6 +34,27 @@ I would like to hear someone’s story
 Do I live in a disadvantaged area
 
 Script: 
+In the information age you can feel as close to kim kardiation as you are the corner store, its hard to know where you really stand 
+How do you know where you really stand against your demographic? 
+Are you a fitness freak and a fitness failure? 
+Do you know more about celebrity health scares than your own health? 
+Do you know if your drinking too much? 
+Are you making as much money as others your age? 
+Are you…?
+Are they…?
+Is he… is she… 
+Izzy! 
+Izzy is your friendly local statical communication and collection platform 
+Izzy is connecting you and your story to your community. 
+We know data driven campaigns have revolutionized financial trading, marketing insights and business process’ the
+The ASX 200 companies all rely on census data every day  to develop customer insights investment decisions you don’t. 
+The numbers are out of reach, the platforms aren’t accessible the people most at risk 
+The most venerable Australian are not going to be able to filter the data to understand how they ca improve their life. 
+This is Alex, Here she can ask issy if she is overweight by asking a few simple questions.  Izzy is able to show alex that she is of normal BMI.  
+Does she drink too much? As you can see, although, she doesn’t drink in excess 7% of women her age drink at a risky lever.  She can also find out what the stats say of people her age getting and dyeing from cancer. 
+Alex has the opportunity to share her story, once its has been collected, her story is published and put on the website of others to read. 
+This is the web site, you can read the Australian stories here, scroll down to see a demo of the chatbot and here are a few suggestions of what to ask Izzy. 
+
 MVP Case study: 
 
 Demographic:
