@@ -1,6 +1,28 @@
 {
    "intents":[
       {
+         "name":"income",
+         "samples":[
+            "How much do other {age} year olds earn",
+            "Do I earn more than my friends",
+            "Do I have a high income",
+            "Do I have a low income",
+            "Do I have a high income for a {age} year old",
+            "Do I have a low income for a {age} year old",
+            "Is my pay high",
+            "Is my pay low"
+         ],
+         "slots":[
+            {
+               "name":"age",
+               "type":"AMAZON.NUMBER",
+               "samples":[
+
+               ]
+            }
+         ]
+      },
+      {
          "name":"hear_story",
          "samples":[
             "I would like to hear someone\u0027s story",
@@ -199,6 +221,30 @@
          ]
       },
       {
+         "name":"superannuation",
+         "samples":[
+            "How much super should I have",
+            "How much superannuation should I have",
+            "What should my super balance be"
+         ],
+         "slots":[
+            {
+               "name":"age",
+               "type":"AMAZON.NUMBER",
+               "samples":[
+
+               ]
+            },
+            {
+               "name":"gender",
+               "type":"Gender",
+               "samples":[
+
+               ]
+            }
+         ]
+      },
+      {
          "name":"bmi",
          "samples":[
             "Am I overweight",
@@ -327,6 +373,17 @@
       }
    ],
    "prompts":[
+      {
+         "id":"Elicit.Intent-income.IntentSlot-age",
+         "promptVersion":"1.0",
+         "definitionVersion":"1.0",
+         "variations":[
+            {
+               "type":"PlainText",
+               "value":"How old are you?"
+            }
+         ]
+      },
       {
          "id":"Elicit.Intent-risky_alcohol.IntentSlot-age",
          "promptVersion":"1.0",
@@ -482,6 +539,28 @@
          ]
       },
       {
+         "id":"Elicit.Intent-superannuation.IntentSlot-age",
+         "promptVersion":"1.0",
+         "definitionVersion":"1.0",
+         "variations":[
+            {
+               "type":"PlainText",
+               "value":"How old are you?"
+            }
+         ]
+      },
+      {
+         "id":"Elicit.Intent-superannuation.IntentSlot-gender",
+         "promptVersion":"1.0",
+         "definitionVersion":"1.0",
+         "variations":[
+            {
+               "type":"PlainText",
+               "value":"What is your gender?"
+            }
+         ]
+      },
+      {
          "id":"Elicit.Intent-bmi.IntentSlot-age",
          "promptVersion":"1.0",
          "definitionVersion":"1.0",
@@ -540,6 +619,24 @@
    "dialog":{
       "version":"1.0",
       "intents":[
+         {
+            "name":"income",
+            "confirmationRequired":false,
+            "prompts":{
+
+            },
+            "slots":[
+               {
+                  "name":"age",
+                  "type":"AMAZON.NUMBER",
+                  "elicitationRequired":true,
+                  "confirmationRequired":false,
+                  "prompts":{
+                     "elicit":"Elicit.Intent-income.IntentSlot-age"
+                  }
+               }
+            ]
+         },
          {
             "name":"hear_story",
             "confirmationRequired":false,
@@ -745,6 +842,33 @@
                   "confirmationRequired":false,
                   "prompts":{
                      "elicit":"Elicit.Intent-socioeconomic_advantage.IntentSlot-postcode"
+                  }
+               }
+            ]
+         },
+         {
+            "name":"superannuation",
+            "confirmationRequired":false,
+            "prompts":{
+
+            },
+            "slots":[
+               {
+                  "name":"age",
+                  "type":"AMAZON.NUMBER",
+                  "elicitationRequired":true,
+                  "confirmationRequired":false,
+                  "prompts":{
+                     "elicit":"Elicit.Intent-superannuation.IntentSlot-age"
+                  }
+               },
+               {
+                  "name":"gender",
+                  "type":"Gender",
+                  "elicitationRequired":true,
+                  "confirmationRequired":false,
+                  "prompts":{
+                     "elicit":"Elicit.Intent-superannuation.IntentSlot-gender"
                   }
                }
             ]
