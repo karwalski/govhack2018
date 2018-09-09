@@ -3,11 +3,34 @@ Govhack 2018
 
 https://izzy.cloud/
 
-https://2018.hackerspace.govhack.org/projects/i_can_haz_story_46
+https://2018.hackerspace.govhack.org/projects/shaping_australian_stories_46
 
-Project Name: Shaping Australian Stories 
+Shaping Australian Stories: Compare, share and connect.
+Empowering Australians to form an understanding of how they compare to others in their demographic, connect to relevant services and share their story.
+In an age of social media, it seems as if everyone is kicking goals and it can sometimes feel as if you are falling behind but social media is subjective, how do we truly understand where we fit in our demographic?
+Introducing Izzy…
+Simply by asking our-chat bot “Izzy” questions about your health, wealth and lifestyle, you can gauge an understanding of how you compare and how you can better your circumstances. Izzy can refer you to the relevant Government departments that may be able to provide you support if you need it. Izzy can help also you set health goals. When your done chatting to Izzy, you can share your story that will be published anonymously on the website that will breathe life into the numbers.
 
-Chatbot Name: Helpful Stat- Bot named Izzy
+
+Try it yourself!
+
+Register at https://slack.govhack.org and send a direct message to @izzy and ask “Am I a normal weight?”
+
+OR
+
+[PENDING FACEBOOK APPROVAL]
+On facebook messenger https://www.facebook.com/messages/t/ShapingAustralianStories and ask “Do I drink too much?”
+
+Example conversation starters:
+What is the average BMI for 25 year old female?
+How many people get cancer at 58 years olds?
+My name is Tony
+Am I unfit for a 36 year old male?
+Do I drink too much for a 29 year old male?
+I would like to tell my story
+I would like to hear someone’s story
+Do I live in a disadvantaged area
+
 
 MVP Case study: 
 
