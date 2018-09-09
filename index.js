@@ -633,6 +633,40 @@ docClient.get(params, function(err, data) {
     
 }
 
+if (intentName === 'income')
+{
+    //Read from table
+    // Demo story
+    table = "income";
+    docClient = new AWS.DynamoDB.DocumentClient();
+params = {
+    TableName: table,
+            Key: {
+    "age" : age
+  }
+};
+
+
+docClient.get(params, function(err, data) {
+    if (err) {
+        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Error.`}));
+    } else {
+        console.log("Query succeeded.");
+
+           var response = parseInt(data.Item.income);
+           var response2 = parseInt(data.Item.disposable);
+  
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Most ${age} year olds have a weekly take-home income around $${response2}.`}));
+    }
+});
+    
+    
+    
+}
+
+
+
 
 if (intentRequest.invocationSource === 'DialogCodeHook' && intentName === 'tell_story' && slots.agree === 'yes' && intentRequest.inputTranscript !== 'yes')
 {
