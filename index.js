@@ -576,7 +576,7 @@ docClient.get(params, function(err, data) {
         var rank = parseInt(data.Item.rank) * 10;
         if (rank > 50)
         {
-            response = "You live in one of the top " + (100 - rank) + "% most advantaged suburbs";
+            response = "You live in one of the top " + (110 - rank) + "% most advantaged suburbs";
         }
         else
         {
@@ -592,6 +592,47 @@ docClient.get(params, function(err, data) {
     
     
 }
+
+if (intentName === 'superannuation')
+{
+    //Read from table
+    // Demo story
+    table = "superannuation";
+    docClient = new AWS.DynamoDB.DocumentClient();
+params = {
+    TableName: table,
+            Key: {
+    "age" : age
+  }
+};
+
+
+docClient.get(params, function(err, data) {
+    if (err) {
+        console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Error.`}));
+    } else {
+        console.log("Query succeeded.");
+        var  response;
+        if(gender == "male" || gender == "Male")
+        {
+           response = Math.round(parseInt(data.Item.male)/1000);
+        }
+        else
+        {
+           response = Math.round(parseInt(data.Item.female)/1000);
+        }
+     
+   
+        
+        callback(close(sessionAttributes, 'Fulfilled', {'contentType': 'PlainText', 'content': `Most ${age} year old ${gender}\s have around $${response}k in superannuation`}));
+    }
+});
+    
+    
+    
+}
+
 
 if (intentRequest.invocationSource === 'DialogCodeHook' && intentName === 'tell_story' && slots.agree === 'yes' && intentRequest.inputTranscript !== 'yes')
 {
