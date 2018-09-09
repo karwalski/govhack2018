@@ -1,9 +1,11 @@
 # govhack2018
 Govhack 2018
 
-https://izzy.cloud/
+Homepage: https://izzy.cloud/
 
-https://2018.hackerspace.govhack.org/projects/shaping_australian_stories_46
+Entry Video: https://www.youtube.com/watch?v=kAGJyE1lZWo
+
+Project Page: https://2018.hackerspace.govhack.org/projects/shaping_australian_stories_46
 
 Shaping Australian Stories: Compare, share and connect.
 Empowering Australians to form an understanding of how they compare to others in their demographic, connect to relevant services and share their story.
